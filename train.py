@@ -10,7 +10,7 @@ flags.DEFINE_float("learning_rate", 0.002, "Learning rate of for adam [0.0002]")
 flags.DEFINE_float("beta1", 0.5, "Momentum term of adam [0.5]")
 flags.DEFINE_integer("attention_label", 1, "Conditioned label that growth attention of training label [1]")
 flags.DEFINE_float("r_alpha", 0.2, "Refinement parameter [0.2]")
-flags.DEFINE_integer("train_size", np.inf, "The size of train images [np.inf]")
+flags.DEFINE_integer("train_size", 6800, "The size of train images [np.inf]")
 flags.DEFINE_integer("batch_size",128, "The size of batch images [64]")
 flags.DEFINE_integer("input_height", 45, "The size of image to use. [45]")
 flags.DEFINE_integer("input_width", None, "The size of image to use. If None, same value as input_height [None]")
@@ -20,7 +20,7 @@ flags.DEFINE_string("dataset", "UCSD", "The name of dataset [UCSD, mnist]")
 flags.DEFINE_string("dataset_address", "./dataset/UCSD_Anomaly_Dataset.v1p2/UCSDped2/Train", "The path of dataset")
 flags.DEFINE_string("input_fname_pattern", "*", "Glob pattern of filename of input images [*]")
 flags.DEFINE_string("checkpoint_dir", "checkpoint", "Directory name to save the checkpoints [checkpoint]")
-flags.DEFINE_string("log_dir", "log", "Directory name to save the log [log]")
+flags.DEFINE_string("log_directory", "logs", "Directory name to save the log [log]")
 flags.DEFINE_string("sample_dir", "samples", "Directory name to save the image samples [samples]")
 flags.DEFINE_boolean("train", True, "True for training, False for testing [False]")
 FLAGS = flags.FLAGS
@@ -37,8 +37,8 @@ def check_some_assertions():
 
     if not os.path.exists(FLAGS.checkpoint_dir):
         os.makedirs(FLAGS.checkpoint_dir)
-    if not os.path.exists(FLAGS.log_dir):
-        os.makedirs(FLAGS.log_dir)
+    if not os.path.exists(FLAGS.log_directory):
+        os.makedirs(FLAGS.log_directory)
     if not os.path.exists(FLAGS.sample_dir):
         os.makedirs(FLAGS.sample_dir)
 
@@ -102,7 +102,7 @@ def main(_):
                     input_fname_pattern=FLAGS.input_fname_pattern,
                     checkpoint_dir=FLAGS.checkpoint_dir,
                     is_training = FLAGS.train,
-                    log_dir=FLAGS.log_dir,
+                    log_dir=FLAGS.log_directory,
                     sample_dir=FLAGS.sample_dir,
                     nd_patch_size=nd_slice_size,
                     n_stride=n_stride,
